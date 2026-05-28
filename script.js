@@ -4,8 +4,8 @@
 const LINKS = {
   buyPrimary: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=2YnuPoufzGzmmrxHsJrZb2NhDC2QHFgWoNn6cSDBpump/",
   buyAlt: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=2YnuPoufzGzmmrxHsJrZb2NhDC2QHFgWoNn6cSDBpump/",
-  dexscreenerEmbed: "https://dexscreener.com/solana",
-  dexscreenerPage: "https://dexscreener.com/solana",
+  dexscreenerEmbed: "https://dexscreener.com/solana/5B32xGqCxLDQKfnzihNGArdyxP7MTYCL8uEXsJegRnRW",
+  dexscreenerPage: "https://dexscreener.com/solana/5b32xgqcxldqkfnzihngardyxp7mtycl8uexsjegrnrw",
 };
 
 const BILL_RAIN_DEFAULT_ON = true;
