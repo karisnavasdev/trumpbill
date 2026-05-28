@@ -2,8 +2,8 @@
  * Trumpbill — update these with your token links
  */
 const LINKS = {
-  buyPrimary: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=soonpump/",
-  buyAlt: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=soonpump/",
+  buyPrimary: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=2YnuPoufzGzmmrxHsJrZb2NhDC2QHFgWoNn6cSDBpump/",
+  buyAlt: "https://https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=2YnuPoufzGzmmrxHsJrZb2NhDC2QHFgWoNn6cSDBpump/",
   dexscreenerEmbed: "https://dexscreener.com/solana",
   dexscreenerPage: "https://dexscreener.com/solana",
 };
