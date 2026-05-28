@@ -16,6 +16,9 @@
   --font-mono: "Space Mono", monospace;
   --font-retro: "VT323", monospace;
   --max: 960px;
+  --site-bg-image: url("./123.jpg");
+  --board-glass: rgba(26, 71, 42, 0.9);
+  --board-dark-glass: rgba(15, 46, 26, 0.94);
 }
 
 *,
@@ -36,6 +39,38 @@ body {
   color: var(--text);
   background: var(--board);
   min-height: 100vh;
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--board);
+}
+
+.site-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--site-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.site-frame {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  margin: clamp(6px, 1.5vw, 14px);
+  padding: clamp(8px, 1.2vw, 12px);
+  border: 4px solid #000;
+  background: rgba(214, 218, 240, 0.12);
+  box-shadow:
+    var(--shadow),
+    inset 0 0 0 clamp(6px, 1vw, 10px) var(--post-bg);
 }
 
 /* scanline overlay */
@@ -72,20 +107,127 @@ body::after {
   font-family: var(--font-mono);
 }
 
+.page-shell {
+  display: grid;
+  grid-template-columns: 1fr min(var(--max), 100%) 1fr;
+  min-height: calc(100vh - 28px);
+  width: 100%;
+}
+
 .board {
   max-width: var(--max);
+  width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
-  background: var(--board);
+  min-height: calc(100vh - 28px);
+  background: var(--board-glass);
   border-left: 4px solid #000;
   border-right: 4px solid #000;
   position: relative;
   z-index: 2;
 }
 
+/* Margin member galleries */
+.margin-gallery {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 10px;
+  z-index: 2;
+}
+
+.margin-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(26, 71, 42, 0.75) 0%,
+    transparent 14%,
+    transparent 86%,
+    rgba(26, 71, 42, 0.75) 100%
+  );
+}
+
+.margin-gallery__track {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(100%, 168px);
+  margin: 0 auto;
+}
+
+.margin-gallery--left .margin-gallery__track {
+  animation: margin-scroll-down 48s linear infinite;
+}
+
+.margin-gallery--right .margin-gallery__track {
+  animation: margin-scroll-up 52s linear infinite;
+}
+
+@keyframes margin-scroll-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes margin-scroll-up {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.member-frame {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 6px;
+  background: var(--post-bg);
+  border: 3px solid #000;
+  box-shadow: var(--shadow);
+  transform: rotate(var(--tilt, -2deg));
+  transition: transform 0.15s;
+}
+
+.member-frame:nth-child(odd) {
+  --tilt: -3deg;
+}
+
+.member-frame:nth-child(even) {
+  --tilt: 2deg;
+}
+
+.member-frame:hover {
+  transform: rotate(0deg) scale(1.04);
+  z-index: 1;
+}
+
+.member-frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid #000;
+  image-rendering: auto;
+}
+
+.member-frame figcaption {
+  margin-top: 6px;
+  font-family: var(--font-retro);
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--lime);
+  letter-spacing: 0.04em;
+}
+
 /* Header */
 .board-head {
-  background: var(--board-dark);
+  background: var(--board-dark-glass);
   border-bottom: 4px solid #000;
   position: sticky;
   top: 0;
@@ -318,7 +460,7 @@ body::after {
 }
 
 .thread--join {
-  background: var(--board-dark);
+  background: var(--board-dark-glass);
   color: #fff;
 }
 
@@ -742,6 +884,10 @@ body::after {
   overflow: hidden;
 }
 
+.site-frame .bill-rain {
+  inset: clamp(6px, 1.5vw, 14px);
+}
+
 .bill {
   position: absolute;
   top: -12vh;
@@ -759,6 +905,24 @@ body::after {
 }
 
 /* Responsive */
+@media (max-width: 1180px) {
+  .page-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .margin-gallery {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-frame {
+    margin: 4px;
+    padding: 6px;
+    box-shadow: 3px 3px 0 #000, inset 0 0 0 5px var(--post-bg);
+  }
+}
+
 @media (max-width: 768px) {
   .board-nav,
   .board-head__right {
@@ -797,7 +961,8 @@ body::after {
   .bill-rain,
   .blink,
   .rainbow,
-  .thread-tag--hot {
+  .thread-tag--hot,
+  .margin-gallery__track {
     animation: none !important;
   }
 }

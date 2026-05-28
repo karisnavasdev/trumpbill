@@ -19,10 +19,20 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="site-bg" aria-hidden="true"></div>
+
+    <div class="site-frame">
     <a class="skip" href="#main">Skip</a>
     <div class="bill-rain" aria-hidden="true"></div>
 
-    <div class="board">
+    <div class="page-shell">
+      <aside
+        class="margin-gallery margin-gallery--left"
+        aria-hidden="true"
+        data-margin-gallery="left"
+      ></aside>
+
+      <div class="board">
       <header class="board-head">
         <div class="board-head__top">
           <a class="board-logo" href="#hero">
@@ -261,6 +271,14 @@
         </p>
         <p class="fine">© nobody. dyor. wagmi maybe.</p>
       </footer>
+    </div>
+
+      <aside
+        class="margin-gallery margin-gallery--right"
+        aria-hidden="true"
+        data-margin-gallery="right"
+      ></aside>
+    </div>
     </div>
 
     <script src="./script.js"></script>

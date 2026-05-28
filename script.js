@@ -11,6 +11,11 @@ const LINKS = {
 const BILL_RAIN_DEFAULT_ON = true;
 const BILL_ASSET_SRC = "./banner.png";
 
+const MEMBER_IMAGES = Array.from({ length: 8 }, (_, i) => ({
+  src: `./members/${i + 1}.jpg`,
+  label: `anon${i + 1}`,
+}));
+
 const RAIN_LABEL_ON = "Stop bill rain";
 const RAIN_LABEL_OFF = "Toggle bill rain";
 
@@ -114,6 +119,44 @@ function syncRainButtons(running) {
   });
 }
 
+function createMemberFrame({ src, label }) {
+  const figure = document.createElement("figure");
+  figure.className = "member-frame";
+
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = "";
+  img.loading = "lazy";
+  img.decoding = "async";
+
+  const caption = document.createElement("figcaption");
+  caption.textContent = label;
+
+  figure.append(img, caption);
+  return figure;
+}
+
+function initMarginGalleries() {
+  const left = document.querySelector('[data-margin-gallery="left"]');
+  const right = document.querySelector('[data-margin-gallery="right"]');
+  if (!left || !right || !MEMBER_IMAGES.length) return;
+
+  const leftImages = MEMBER_IMAGES.filter((_, i) => i % 2 === 0);
+  const rightImages = MEMBER_IMAGES.filter((_, i) => i % 2 === 1);
+
+  const buildTrack = (images) => {
+    const track = document.createElement("div");
+    track.className = "margin-gallery__track";
+    const frames = images.map(createMemberFrame);
+    frames.forEach((frame) => track.appendChild(frame));
+    frames.forEach((frame) => track.appendChild(frame.cloneNode(true)));
+    return track;
+  };
+
+  left.appendChild(buildTrack(leftImages));
+  right.appendChild(buildTrack(rightImages));
+}
+
 function initMobileNav() {
   const btn = document.querySelector(".burger");
   const nav = document.querySelector(".mobile-drawer");
@@ -137,6 +180,7 @@ function init() {
   setDexEmbed(LINKS.dexscreenerEmbed);
 
   initMobileNav();
+  initMarginGalleries();
 
   const rain = initBillRain();
   document.querySelectorAll(".toggle-rain").forEach((btn) => {
